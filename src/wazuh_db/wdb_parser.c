@@ -3654,7 +3654,10 @@ int wdb_parse_packages(wdb_t * wdb, char * input, char * output) {
     int result = OS_INVALID;
     char* next = NULL;
     char* tail = NULL;
-    char* action = strtok_r(input, " ", &tail);
+    char* action = NULL;
+    if (input) {
+        action = strtok_r(input, " ", &tail);
+    }
 
     if (!action) {
         mdebug1("Invalid package info query syntax. Missing action");
@@ -3767,7 +3770,10 @@ int wdb_parse_hotfixes(wdb_t * wdb, char * input, char * output) {
     int result = OS_INVALID;
     char* next = NULL;
     char* tail = NULL;
-    char* action = strtok_r(input, " ", &tail);
+    char* action = NULL;
+    if (input) {
+        action = strtok_r(input, " ", &tail);
+    }
 
     if (!action) {
         mdebug1("Invalid hotfix info query syntax. Missing action");
