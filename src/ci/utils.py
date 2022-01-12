@@ -172,7 +172,7 @@ def runTests(moduleName):
     printHeader(moduleName, 'tests')
     tests = []
     reg = re.compile(
-        ".*unit_test|.*unit_test.exe|.*integration_test|.*integration_test.exe")
+        ".*unit_test|.*unit_test.exe|.*interface_test|.*interface_test.exe|.*integration_test|.*integration_test.exe")
     currentDir = currentDirPathBuild(moduleName)
 
     if not moduleName == 'shared_modules/utils':
