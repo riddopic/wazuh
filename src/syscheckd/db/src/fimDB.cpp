@@ -34,12 +34,13 @@ void FIMDB::registerRSync()
                                    m_dbsyncHandler->handle(),
                                    nlohmann::json::parse(FIM_FILE_SYNC_CONFIG_STATEMENT),
                                    m_syncFileMessageFunction);
+
     if (m_isWindows)
     {
         m_rsyncHandler->registerSyncID(FIM_COMPONENT_REGISTRY,
-                                    m_dbsyncHandler->handle(),
-                                    nlohmann::json::parse(FIM_REGISTRY_SYNC_CONFIG_STATEMENT),
-                                    m_syncRegistryMessageFunction);
+                                       m_dbsyncHandler->handle(),
+                                       nlohmann::json::parse(FIM_REGISTRY_SYNC_CONFIG_STATEMENT),
+                                       m_syncRegistryMessageFunction);
     }
 }
 
@@ -49,6 +50,7 @@ void FIMDB::sync()
     m_rsyncHandler->startSync(m_dbsyncHandler->handle(),
                               nlohmann::json::parse(FIM_FILE_START_CONFIG_STATEMENT),
                               m_syncFileMessageFunction);
+
     if (m_isWindows)
     {
         m_rsyncHandler->startSync(m_dbsyncHandler->handle(),
@@ -75,13 +77,13 @@ void FIMDB::loopRSync(std::unique_lock<std::mutex>& lock)
 }
 
 void FIMDB::init(unsigned int syncInterval,
-                  fim_sync_callback_t callbackSync,
-                  logging_callback_t callbackLog,
-                  std::shared_ptr<DBSync> dbsyncHandler,
-                  std::shared_ptr<RemoteSync> rsyncHandler,
-                  unsigned int fileLimit,
-                  unsigned int registryLimit,
-                  bool isWindows)
+                 fim_sync_callback_t callbackSync,
+                 logging_callback_t callbackLog,
+                 std::shared_ptr<DBSync> dbsyncHandler,
+                 std::shared_ptr<RemoteSync> rsyncHandler,
+                 unsigned int fileLimit,
+                 unsigned int registryLimit,
+                 bool isWindows)
 {
     // LCOV_EXCL_START
     std::function<void(const std::string&)> callbackSyncFileWrapper

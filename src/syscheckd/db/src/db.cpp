@@ -47,12 +47,13 @@ std::string CreateStatement(const bool isWindows)
 
     std::string ret = CREATE_FILE_DB_STATEMENT;
 
-    if(isWindows)
+    if (isWindows)
     {
         ret += CREATE_REGISTRY_KEY_DB_STATEMENT;
         ret += CREATE_REGISTRY_VALUE_DB_STATEMENT;
         ret += CREATE_REGISTRY_VIEW_STATEMENT;
     }
+
     return ret;
 }
 
