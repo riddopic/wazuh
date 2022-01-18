@@ -136,7 +136,7 @@ void __wrap_read_internal(int debug_level)
 
 void test_Start_win32_Syscheck_no_config_file(void **state) {
     directory_t EMPTY = { 0 };
-    registry REGISTRY_EMPTY[] = { { NULL, 0, 0, 0, 0, NULL, NULL } };
+    registry_t REGISTRY_EMPTY[] = { { NULL, 0, 0, 0, 0, NULL, NULL } };
 
     syscheck.registry = REGISTRY_EMPTY;
     syscheck.disabled = 1;
@@ -153,7 +153,7 @@ void test_Start_win32_Syscheck_no_config_file(void **state) {
 
 void test_Start_win32_Syscheck_corrupted_config_file(void **state) {
     directory_t EMPTY = { 0 };
-    registry REGISTRY_EMPTY[] = { { NULL, 0, 0, 0, 0, NULL, NULL } };
+    registry_t REGISTRY_EMPTY[] = { { NULL, 0, 0, 0, 0, NULL, NULL } };
 
     syscheck.registry = REGISTRY_EMPTY;
     syscheck.disabled = 1;
@@ -252,7 +252,7 @@ void test_Start_win32_Syscheck_dirs_and_registry(void **state) {
 
     syscheck.disabled = 0;
 
-    registry syscheck_registry[] = { { "Entry1", 1, 0, 0, 0, NULL, NULL, "Tag1" },
+    registry_t syscheck_registry[] = { { "Entry1", 1, 0, 0, 0, NULL, NULL, "Tag1" },
                                      { NULL, 0, 0, 0, 0, NULL, NULL, NULL } };
     syscheck.registry = syscheck_registry;
 
@@ -321,7 +321,7 @@ void test_Start_win32_Syscheck_whodata_active(void **state) {
 
     directory_t *directory0 = fim_create_directory("c:\\dir1", WHODATA_ACTIVE, NULL, 512, NULL, -1, 0);
 
-    registry syscheck_registry[] = { { NULL, 0, 0, 0, 0, NULL, NULL } };
+    registry_t syscheck_registry[] = { { NULL, 0, 0, 0, 0, NULL, NULL } };
 
     syscheck.disabled = 0;
 
