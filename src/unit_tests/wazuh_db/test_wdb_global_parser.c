@@ -2345,6 +2345,8 @@ void test_wdb_parse_global_restore_backup_invalid_syntax(void **state) {
     char *query = NULL;
 
     os_strdup("global backup restore {INVALID_JSON}", query);
+    expect_function_call(__wrap_pthread_mutex_lock);
+    expect_function_call(__wrap_pthread_mutex_unlock);
     will_return(__wrap_wdb_open_global, data->wdb);
     expect_string(__wrap__mdebug2, formatted_msg, "Global query: backup restore {INVALID_JSON}");
 
@@ -2365,6 +2367,8 @@ void test_wdb_parse_global_restore_backup_success_missing_snapshot(void **state)
     char *query = NULL;
 
     os_strdup("global backup restore", query);
+    expect_function_call(__wrap_pthread_mutex_lock);
+    expect_function_call(__wrap_pthread_mutex_unlock);
     will_return(__wrap_wdb_open_global, data->wdb);
     expect_string(__wrap__mdebug2, formatted_msg, "Global query: backup restore");
 
@@ -2384,6 +2388,8 @@ void test_wdb_parse_global_restore_backup_success_pre_restore_true(void **state)
     char *query = NULL;
 
     os_strdup("global backup restore {\"snapshot\":\"global.db-backup-TIMESTAMP\",\"save_pre_restore_state\":true}", query);
+    expect_function_call(__wrap_pthread_mutex_lock);
+    expect_function_call(__wrap_pthread_mutex_unlock);
     will_return(__wrap_wdb_open_global, data->wdb);
     expect_string(__wrap__mdebug2, formatted_msg, "Global query: backup restore {\"snapshot\":\"global.db-backup-TIMESTAMP\",\"save_pre_restore_state\":true}");
 
@@ -2404,6 +2410,8 @@ void test_wdb_parse_global_restore_backup_success_pre_restore_false(void **state
     char *query = NULL;
 
     os_strdup("global backup restore {\"snapshot\":\"global.db-backup-TIMESTAMP\",\"save_pre_restore_state\":false}", query);
+    expect_function_call(__wrap_pthread_mutex_lock);
+    expect_function_call(__wrap_pthread_mutex_unlock);
     will_return(__wrap_wdb_open_global, data->wdb);
     expect_string(__wrap__mdebug2, formatted_msg, "Global query: backup restore {\"snapshot\":\"global.db-backup-TIMESTAMP\",\"save_pre_restore_state\":false}");
 
@@ -2424,6 +2432,8 @@ void test_wdb_parse_global_restore_backup_success_pre_restore_missing(void **sta
     char *query = NULL;
 
     os_strdup("global backup restore {\"snapshot\":\"global.db-backup-TIMESTAMP\"}", query);
+    expect_function_call(__wrap_pthread_mutex_lock);
+    expect_function_call(__wrap_pthread_mutex_unlock);
     will_return(__wrap_wdb_open_global, data->wdb);
     expect_string(__wrap__mdebug2, formatted_msg, "Global query: backup restore {\"snapshot\":\"global.db-backup-TIMESTAMP\"}");
 

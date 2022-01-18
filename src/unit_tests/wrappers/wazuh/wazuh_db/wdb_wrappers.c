@@ -346,3 +346,11 @@ cJSON *__wrap_wdb_get_internal_config() {
 cJSON *__wrap_wdb_get_config() {
     return mock_ptr_type(cJSON *);
 }
+
+int __wrap_wdb_commit2(__attribute__((unused))wdb_t * wdb) {
+    return mock();
+}
+
+void __wrap_wdb_finalize_all_statements(__attribute__((unused))wdb_t * wdb) {
+    function_called();
+}
