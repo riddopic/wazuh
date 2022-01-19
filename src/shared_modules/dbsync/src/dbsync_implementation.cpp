@@ -74,8 +74,7 @@ void DBSyncImplementation::syncRowData(const DBSYNC_HANDLE      handle,
         }
     }
 
-    auto it { json.find("old_data") };
-    auto returnOldData { it == json.end() };
+    auto returnOldData { json.find("old_data") != json.end() };
 
     ctx->m_dbEngine->syncTableRowData(json.at("table"),
                                     json.at("data"),
