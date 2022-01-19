@@ -101,6 +101,8 @@ public:
      * @param jsInput        JSON information used to add/modified a database record.
      * @param callbackData   Result callback(std::function) will be called for each result.
      *
+     * @details If the JSON object has a "old_data" field, the callback will include
+     * the previous data for alreadye existing rows.
      */
     virtual void syncRow(const nlohmann::json& jsInput,
                          ResultCallbackData    callbackData);

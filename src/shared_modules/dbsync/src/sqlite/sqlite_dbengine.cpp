@@ -137,11 +137,11 @@ void SQLiteDBEngine::refreshTableData(const nlohmann::json& data,
     }
 }
 
-
 void SQLiteDBEngine::syncTableRowData(const std::string& table,
                                       const nlohmann::json& data,
                                       const DbSync::ResultCallback callback,
-                                      const bool inTransaction)
+                                      const bool inTransaction,
+                                      const bool returnOldData)
 {
     static const auto getDataToUpdate
     {
@@ -181,10 +181,10 @@ void SQLiteDBEngine::syncTableRowData(const std::string& table,
             return ret;
         }
     };
-    std::vector<std::string> primaryKeyList;
 
     if (0 != loadTableData(table))
     {
+        std::vector<std::string> primaryKeyList;
         if (getPrimaryKeysFromTable(table, primaryKeyList))
         {
 
@@ -195,7 +195,7 @@ void SQLiteDBEngine::syncTableRowData(const std::string& table,
             for (const auto& entry : data)
             {
                 nlohmann::json jsResult;
-                const bool diffExist { getRowDiff(primaryKeyList, table, entry, jsResult) };
+                const bool diffExist { getRowDiff(primaryKeyList, table, entry, jsResult, returnOldData) };
 
                 if (diffExist)
                 {
@@ -1191,10 +1191,14 @@ std::string SQLiteDBEngine::buildLeftOnlyQuery(const std::string& t1,
     return "SELECT " + fieldsList + " FROM " + t1 + " t1 LEFT JOIN " + t2 + " t2 ON " + onMatchList + " WHERE " + nullFilterList + ";";
 }
 
+// primary list key is something like "pid", "someother pk", …
+// data is something like // {"pid":300, "executable": "/usr/bin"}
+// result is something like data.
 bool SQLiteDBEngine::getRowDiff(const std::vector<std::string>& primaryKeyList,
                                 const std::string& table,
                                 const nlohmann::json& data,
-                                nlohmann::json& jsResult)
+                                nlohmann::json& jsResult,
+                                const bool returnOldData)
 {
     bool diffExist { false };
     bool isModified { false };
@@ -1210,8 +1214,7 @@ bool SQLiteDBEngine::getRowDiff(const std::vector<std::string>& primaryKeyList,
     {
         const auto& it
         {
-            std::find_if(tableFields.begin(), tableFields.end(),
-                         [&pkValue](const ColumnData & column)
+            std::find_if(tableFields.begin(), tableFields.end(), [&pkValue](const ColumnData & column)
             {
                 return 0 == std::get<Name>(column).compare(pkValue);
             })
@@ -1229,7 +1232,7 @@ bool SQLiteDBEngine::getRowDiff(const std::vector<std::string>& primaryKeyList,
 
     if (diffExist)
     {
-        // The row exist, so lets generate the diff
+        // The row exists, so lets generate the diff
         Row registryFields;
 
         for (const auto& field : tableFields)
@@ -1258,7 +1261,12 @@ bool SQLiteDBEngine::getRowDiff(const std::vector<std::string>& primaryKeyList,
                     {
                         // Diff found
                         isModified = true;
-                        jsResult[value.first] = *it;
+                        if (returnOldData) {
+                            jsResult["new"][value.first] = *it;
+                            jsResult["old"][value.first] = value.second;
+                        } else {
+                            jsResult[value.first] = *it;
+                        }
                     }
                 }
             }

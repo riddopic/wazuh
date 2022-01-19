@@ -53,10 +53,7 @@ void DBSyncImplementation::syncRowData(const DBSYNC_HANDLE      handle,
                                        const nlohmann::json&    json,
                                        const ResultCallback     callback)
 {
-    const auto ctx{ dbEngineContext(handle) };
-    ctx->m_dbEngine->syncTableRowData(json.at("table"),
-                                      json.at("data"),
-                                      callback);
+    syncRowData(handle, nullptr, json, callback);
 }
 
 void DBSyncImplementation::syncRowData(const DBSYNC_HANDLE      handle,
@@ -65,17 +62,25 @@ void DBSyncImplementation::syncRowData(const DBSYNC_HANDLE      handle,
                                        const ResultCallback     callback)
 {
     const auto& ctx{ dbEngineContext(handle) };
-    const auto& tnxCtx { ctx->transactionContext(txn) };
 
-    if (std::find(tnxCtx->m_tables.begin(), tnxCtx->m_tables.end(), json.at("table")) == tnxCtx->m_tables.end())
+    if (txn)
     {
-        throw dbsync_error{INVALID_TABLE};
+        const auto& tnxCtx { ctx->transactionContext(txn) };
+
+        if (std::find(tnxCtx->m_tables.begin(), tnxCtx->m_tables.end(), json.at("table")) == tnxCtx->m_tables.end())
+        {
+            throw dbsync_error{INVALID_TABLE};
+        }
     }
 
+    auto it { json.find("old_data") };
+    auto includeOldData { it == json.end() };
     ctx->m_dbEngine->syncTableRowData(json.at("table"),
-                                      json.at("data"),
-                                      callback,
-                                      true);
+                                    json.at("data"),
+                                    callback,
+                                    true,
+                                    includeOldData);
+
 }
 
 void DBSyncImplementation::deleteRowsData(const DBSYNC_HANDLE   handle,
