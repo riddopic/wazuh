@@ -5943,14 +5943,12 @@ int main()
         cmocka_unit_test_setup_teardown(test_wdb_global_find_agent_exec_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_find_agent_success, test_setup, test_teardown),
         /* Tests wdb_global_update_agent_group */
-        /* TODO Fix UT
         cmocka_unit_test_setup_teardown(test_wdb_global_update_agent_group_transaction_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_update_agent_group_cache_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_update_agent_group_bind1_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_update_agent_group_bind2_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_update_agent_group_step_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_update_agent_group_success, test_setup, test_teardown),
-        */
         /* Tests wdb_global_find_group */
         cmocka_unit_test_setup_teardown(test_wdb_global_find_group_transaction_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_find_group_cache_fail, test_setup, test_teardown),
@@ -5968,10 +5966,8 @@ int main()
         cmocka_unit_test_setup_teardown(test_wdb_global_insert_agent_belong_cache_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_insert_agent_belong_bind1_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_insert_agent_belong_bind2_fail, test_setup, test_teardown),
-        /* TODO Fix UT
         cmocka_unit_test_setup_teardown(test_wdb_global_insert_agent_belong_step_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_insert_agent_belong_success, test_setup, test_teardown),
-        */
         /* Tests wdb_global_delete_group_belong */
         cmocka_unit_test_setup_teardown(test_wdb_global_delete_group_belong_transaction_fail, test_setup, test_teardown),
         cmocka_unit_test_setup_teardown(test_wdb_global_delete_group_belong_cache_fail, test_setup, test_teardown),
