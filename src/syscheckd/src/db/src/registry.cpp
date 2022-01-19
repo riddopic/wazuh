@@ -45,7 +45,7 @@ const char* registry_arch[] =
     }
     catch (std::exception& ex)
     {
-        //FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        //FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return FIMDB_ERR;
     }
 }
@@ -63,7 +63,7 @@ FIMDBErrorCode fim_db_remove_registry_value_data(fim_registry_value_data* value_
     }
     catch (std::exception& ex)
     {
-        //FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        //FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return FIMDB_ERR;
     }
 }
@@ -86,7 +86,7 @@ fim_registry_value_data* fim_db_get_registry_data(unsigned int key_id, const cha
     }
     catch (std::exception& ex)
     {
-        FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return 0;
     }
 
@@ -111,7 +111,7 @@ fim_registry_key* fim_db_get_registry_key(const char* path, unsigned int arch)
     }
     catch (std::exception& ex)
     {
-        FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return 0;
     }
 
@@ -136,7 +136,7 @@ fim_registry_key* fim_db_get_registry_key_using_id(unsigned int key_id)
     }
     catch (std::exception& ex)
     {
-        FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return 0;
     }
 
@@ -154,7 +154,7 @@ int fim_db_get_count_registry_key()
     }
     catch (std::exception& ex)  // EMPTY_TABLE_METADATA
     {
-        FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return FIMDB_ERR;
     }
 
@@ -171,7 +171,7 @@ int fim_db_get_count_registry_data()
     }
     catch (std::exception& ex)  // EMPTY_TABLE_METADATA
     {
-        FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return FIMDB_ERR;
     }
 
@@ -190,7 +190,7 @@ FIMDBErrorCode fim_db_insert_registry_data(fim_registry_value_data* data)
     }
     catch (const std::exception& ex)
     {
-        FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return FIMDB_ERR;
     }
 
@@ -210,7 +210,7 @@ FIMDBErrorCode fim_db_insert_registry_key(fim_registry_key* entry)
     }
     catch (const std::exception& ex)
     {
-        FIMDB::getInstance().loggingFunction(LOG_ERROR, ex.what());
+        FIMDB::instance().loggingFunction(LOG_ERROR, ex.what());
         return FIMDB_ERR;
     }
 
