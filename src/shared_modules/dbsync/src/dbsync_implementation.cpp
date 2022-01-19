@@ -63,7 +63,8 @@ void DBSyncImplementation::syncRowData(const DBSYNC_HANDLE      handle,
 {
     const auto& ctx{ dbEngineContext(handle) };
 
-    if (txn)
+    bool inTransaction { txn };
+    if (inTransaction)
     {
         const auto& tnxCtx { ctx->transactionContext(txn) };
 
@@ -74,12 +75,13 @@ void DBSyncImplementation::syncRowData(const DBSYNC_HANDLE      handle,
     }
 
     auto it { json.find("old_data") };
-    auto includeOldData { it == json.end() };
+    auto returnOldData { it == json.end() };
+
     ctx->m_dbEngine->syncTableRowData(json.at("table"),
                                     json.at("data"),
                                     callback,
-                                    true,
-                                    includeOldData);
+                                    inTransaction,
+                                    returnOldData);
 
 }
 
